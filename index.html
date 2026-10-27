@@ -20,7 +20,10 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+  <!-- Fonts load without blocking first paint (system fallbacks show until they arrive).
+       Newsreader is pinned to its display cut (opsz 72, weight 400): ~22 KB instead of ~132 KB. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@72,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@72,400&display=swap"></noscript>
   <link rel="stylesheet" href="css/styles.css">
 
   <!-- Flag JS support before first paint so no-JS visitors get the fallback layout. -->

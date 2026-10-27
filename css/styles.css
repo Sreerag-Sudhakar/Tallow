@@ -198,7 +198,7 @@ section[id] {
   gap: 0.5rem;
   margin-right: auto;
   color: var(--bone);
-  font: 500 var(--step-1) / 1 var(--font-display);
+  font: 400 var(--step-1) / 1 var(--font-display);
   text-decoration: none;
 }
 
@@ -526,7 +526,7 @@ main > .proof {
 
 .proof-num {
   color: var(--bone);
-  font: 500 var(--step-2) / 1.1 var(--font-display);
+  font: 400 var(--step-2) / 1.1 var(--font-display);
 }
 
 .stars {
