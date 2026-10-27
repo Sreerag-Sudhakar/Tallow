@@ -369,9 +369,21 @@
     </section>
 
     <!-- 9. Final CTA (Task 9) -->
-    <section id="waitlist" aria-labelledby="waitlist-title">
+    <section id="waitlist" class="waitlist" aria-labelledby="waitlist-title">
       <div class="container">
         <h2 id="waitlist-title">Save your spot before launch</h2>
+        <p class="section-lead">Waitlist members get Tallow two weeks early. One email when it’s ready, and that’s it.</p>
+
+        <!-- FORMSPREE PLACEHOLDER: replace YOUR_FORM_ID in the action below with your own form ID.
+             main.js posts to this same URL, so this is the only place to change. -->
+        <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="post">
+          <label for="waitlist-email">Email address</label>
+          <div class="waitlist-row">
+            <input id="waitlist-email" name="email" type="email" autocomplete="email" placeholder="you@work.com" required aria-describedby="waitlist-msg">
+            <button class="button" type="submit">Join the waitlist</button>
+          </div>
+          <p id="waitlist-msg" class="form-msg" aria-live="polite"></p>
+        </form>
       </div>
     </section>
   </main>

@@ -81,3 +81,81 @@ document.querySelectorAll('.faq-q').forEach((button) => {
     setOpen(button.getAttribute('aria-expanded') !== 'true');
   });
 });
+
+/* ---------- Waitlist form ---------- */
+// Posts to the form's action URL. FORMSPREE PLACEHOLDER: set your form ID in index.html (form action).
+const waitlistForm = document.querySelector('.waitlist-form');
+const emailInput = document.getElementById('waitlist-email');
+const formMessage = document.getElementById('waitlist-msg');
+const submitButton = waitlistForm.querySelector('button[type="submit"]');
+
+const MESSAGES = {
+  empty: 'Add your email so we can save your spot.',
+  format: 'That email looks incomplete. Check for a typo?',
+  success: 'You’re on the list. We’ll write once, when Tallow is ready.',
+  error: 'That didn’t go through. Your email is still here, so try again.',
+};
+
+// Something@something.tld, with a TLD of 2+ characters and no spaces
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// Returns '' when valid, otherwise the MESSAGES key for the problem.
+function validateEmail(value) {
+  const email = value.trim();
+  if (!email) return 'empty';
+  return EMAIL_PATTERN.test(email) ? '' : 'format';
+}
+
+function showMessage(key, state) {
+  formMessage.textContent = MESSAGES[key];
+  formMessage.dataset.state = state;
+}
+
+function setSending(sending) {
+  submitButton.disabled = sending;
+  waitlistForm.setAttribute('aria-busy', String(sending));
+}
+
+// JS takes over validation so messages are ours, not the browser's bubbles
+waitlistForm.noValidate = true;
+
+waitlistForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (submitButton.disabled) return; // a request is already in flight
+
+  const problem = validateEmail(emailInput.value);
+  if (problem) {
+    emailInput.setAttribute('aria-invalid', 'true');
+    showMessage(problem, 'error');
+    emailInput.focus();
+    return;
+  }
+
+  emailInput.value = emailInput.value.trim();
+  emailInput.removeAttribute('aria-invalid');
+  setSending(true);
+
+  try {
+    const response = await fetch(waitlistForm.action, {
+      method: 'POST',
+      body: new FormData(waitlistForm),
+      headers: { Accept: 'application/json' },
+    });
+    if (!response.ok) throw new Error(`Formspree responded ${response.status}`);
+    waitlistForm.reset();
+    showMessage('success', 'success');
+  } catch {
+    showMessage('error', 'error'); // email stays in the field for a retry
+  } finally {
+    setSending(false);
+  }
+});
+
+// Editing the field clears the error state
+emailInput.addEventListener('input', () => {
+  if (emailInput.hasAttribute('aria-invalid')) {
+    emailInput.removeAttribute('aria-invalid');
+    formMessage.textContent = '';
+    delete formMessage.dataset.state;
+  }
+});

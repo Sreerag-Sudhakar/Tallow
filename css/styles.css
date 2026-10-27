@@ -982,6 +982,71 @@ html:not(.js) .billing {
   }
 }
 
+/* ---------- 9. Final CTA / waitlist ---------- */
+main > .waitlist {
+  background: var(--hearth);
+}
+
+.waitlist-form {
+  max-width: 34rem;
+  margin-top: var(--space-l);
+}
+
+.waitlist-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.waitlist-row {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.waitlist-form input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--soot);
+  color: var(--bone);
+  font: inherit;
+}
+
+.waitlist-form input::placeholder {
+  color: var(--ash);
+}
+
+.waitlist-form input[aria-invalid="true"] {
+  border: 2px solid var(--rust);
+}
+
+.waitlist-form button[disabled] {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* Status line: the words carry the meaning; colour only reinforces it */
+.form-msg {
+  min-height: 1.6em; /* reserve the line so messages don't shift the layout */
+  margin-top: var(--space-s);
+}
+
+.form-msg[data-state="error"] {
+  color: var(--rust);
+}
+
+.form-msg[data-state="success"] {
+  color: var(--moss);
+}
+
+@media (min-width: 48rem) {
+  .waitlist-row {
+    grid-template-columns: 1fr auto;
+  }
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);
