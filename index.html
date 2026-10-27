@@ -261,6 +261,63 @@
     <section id="pricing" aria-labelledby="pricing-title">
       <div class="container">
         <h2 id="pricing-title">Free to start. Fair when you grow.</h2>
+        <p class="section-lead">One habit is free, for good. Pay only when you want more room.</p>
+
+        <!-- Billing toggle: hidden without JS, where monthly prices show -->
+        <div class="billing" role="group" aria-label="Billing period">
+          <button type="button" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-billing="yearly" aria-pressed="false">Yearly <span class="billing-save">save 20%</span></button>
+        </div>
+        <p id="billing-status" class="visually-hidden" aria-live="polite"></p>
+
+        <!-- Prices that change carry data-monthly / data-yearly; main.js swaps the text -->
+        <div class="plans">
+          <article class="plan" aria-labelledby="plan-free">
+            <h3 id="plan-free">Free</h3>
+            <p class="plan-for">For building your first habit.</p>
+            <p class="price"><span class="price-amount">$0</span> <span class="price-period">forever</span></p>
+            <ul class="plan-features">
+              <li>One habit</li>
+              <li>Forgiving streaks</li>
+              <li>Evening reminder</li>
+              <li>Last 30 days of history</li>
+            </ul>
+            <a class="button button--ghost" href="#waitlist">Join the waitlist</a>
+          </article>
+
+          <article class="plan plan--pro" aria-labelledby="plan-pro">
+            <h3 id="plan-pro">Pro</h3>
+            <p class="plan-tag">Most picked</p>
+            <p class="plan-for">For when the first habit has stuck.</p>
+            <p class="price">
+              <span class="price-amount" data-monthly="$5" data-yearly="$48">$5</span>
+              <span class="price-period" data-monthly="/mo" data-yearly="/yr">/mo</span>
+            </p>
+            <ul class="plan-features">
+              <li>Up to 3 habits, added one at a time</li>
+              <li>Full history and the Sunday look-back</li>
+              <li>Home-screen widget</li>
+              <li>Your own check-in window</li>
+            </ul>
+            <a class="button" href="#waitlist">Join the waitlist</a>
+          </article>
+
+          <article class="plan" aria-labelledby="plan-team">
+            <h3 id="plan-team">Team</h3>
+            <p class="plan-for">For small teams, from 3 seats.</p>
+            <p class="price">
+              <span class="price-amount" data-monthly="$4" data-yearly="$38">$4</span>
+              <span class="price-period" data-monthly="/seat/mo" data-yearly="/seat/yr">/seat/mo</span>
+            </p>
+            <ul class="plan-features">
+              <li>Everything in Pro, for each person</li>
+              <li>Shared team habits, like a midday walk</li>
+              <li>Streaks stay private unless someone shares</li>
+              <li>One invoice for everyone</li>
+            </ul>
+            <a class="button button--ghost" href="#waitlist">Join the waitlist</a>
+          </article>
+        </div>
       </div>
     </section>
 

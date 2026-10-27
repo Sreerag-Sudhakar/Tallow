@@ -772,6 +772,124 @@ main > .proof {
   }
 }
 
+/* ---------- 7. Pricing ---------- */
+.billing {
+  display: inline-flex;
+  margin-top: var(--space-l);
+  padding: 0.25rem;
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+
+html:not(.js) .billing {
+  display: none;
+}
+
+.billing button {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--bone);
+  font: 500 var(--step--1) / 1.2 var(--font-body);
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms;
+}
+
+.billing button[aria-pressed="true"] {
+  background: var(--bone);
+  color: var(--soot);
+}
+
+.billing-save {
+  color: var(--wick);
+}
+
+.billing [aria-pressed="true"] .billing-save {
+  color: inherit;
+}
+
+.plans {
+  display: grid;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-m);
+  border: 1px solid var(--hearth);
+  border-radius: var(--radius);
+}
+
+/* Pro: the one filled panel, with a Wick edge */
+.plan--pro {
+  background: var(--hearth);
+  border: 2px solid var(--wick);
+}
+
+.plan h3 {
+  font-size: var(--step-2);
+}
+
+.plan-tag {
+  position: absolute;
+  top: -0.8rem;
+  right: var(--space-m);
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  background: var(--wick);
+  color: var(--soot);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.plan-for {
+  color: var(--ash);
+}
+
+.price {
+  margin-block: var(--space-m);
+  color: var(--ash);
+}
+
+.price-amount {
+  color: var(--bone);
+  font: 400 var(--step-4) / 1 var(--font-display);
+}
+
+.plan-features {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: var(--space-l);
+}
+
+.plan-features li {
+  padding-left: 1.5rem;
+  text-wrap: pretty;
+  background: no-repeat 0 0.45em / 0.9rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23ABA597' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* Pin each CTA to the bottom so buttons line up across plans */
+.plan .button {
+  margin-top: auto;
+  text-align: center;
+}
+
+@media (min-width: 64rem) {
+  .plans {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Pro stands out past its equal-height neighbours */
+  .plan--pro {
+    margin-block: calc(var(--space-m) * -1);
+    padding-block: var(--space-l);
+  }
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);

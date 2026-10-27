@@ -46,3 +46,22 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '-80px 0px -60% 0px' });
 
 sections.forEach((section) => sectionObserver.observe(section));
+
+/* ---------- Pricing toggle ---------- */
+const billingButtons = document.querySelectorAll('[data-billing]');
+const billingStatus = document.getElementById('billing-status');
+
+// period: 'monthly' | 'yearly'. Swaps every price that has data-monthly/data-yearly.
+function setBilling(period) {
+  billingButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', String(button.dataset.billing === period));
+  });
+  document.querySelectorAll('[data-monthly]').forEach((el) => {
+    el.textContent = el.dataset[period];
+  });
+  billingStatus.textContent = `Showing ${period} prices.`;
+}
+
+billingButtons.forEach((button) => {
+  button.addEventListener('click', () => setBilling(button.dataset.billing));
+});
