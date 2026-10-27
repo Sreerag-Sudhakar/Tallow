@@ -1,0 +1,328 @@
+/* ==========================================================================
+   Tallow landing page
+   Mobile-first. Breakpoint: 48rem (768px) for the desktop nav and wide layouts.
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Palette. Contrast ratios against Soot/Hearth are in the README. */
+  --soot: #2B2621;   /* page background: warm, lifted off black */
+  --hearth: #36302A; /* raised surfaces */
+  --bone: #EFE8DA;   /* primary text */
+  --ash: #ABA597;    /* secondary text, outlines */
+  --wick: #E8A33D;   /* actions, links, focus */
+  --moss: #9CAD72;   /* real states only: done, success */
+  --rust: #F2967A;   /* functional only: errors */
+
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  /* Fluid type scale: ~1.25 ratio at 360px, ~1.333 at 1280px */
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.17rem + 0.4vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.4rem + 0.8vw, 2rem);
+  --step-3: clamp(1.95rem, 1.6rem + 1.6vw, 2.8rem);
+  --step-4: clamp(2.44rem, 1.8rem + 3vw, 4.2rem);
+
+  --space-s: 0.75rem;
+  --space-m: 1.5rem;
+  --space-l: 3rem;
+  --space-xl: clamp(4rem, 3rem + 5vw, 7.5rem);
+
+  --header-h: 4rem;
+  --radius: 6px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--soot);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--step-3); letter-spacing: -0.01em; }
+
+a {
+  color: var(--wick);
+}
+
+ul[class] {
+  list-style: none;
+  padding: 0;
+}
+
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--wick);
+  outline-offset: 3px;
+}
+
+section[id] {
+  scroll-margin-top: var(--header-h);
+}
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  background: var(--bone);
+  color: var(--soot);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-block;
+  padding: 0.85rem 1.4rem;
+  border: 2px solid var(--wick);
+  border-radius: var(--radius);
+  background: var(--wick);
+  color: var(--soot);
+  font: 700 var(--step-0) / 1.2 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms, border-color 150ms;
+}
+
+.button:hover {
+  background: var(--bone);
+  border-color: var(--bone);
+}
+
+.button--small {
+  padding: 0.5rem 0.8rem;
+  font-size: var(--step--1);
+}
+
+/* ---------- 1. Navbar ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--soot);
+  border-bottom: 1px solid var(--hearth);
+}
+
+.header-inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--header-h);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+  color: var(--bone);
+  font: 500 var(--step-1) / 1 var(--font-display);
+  text-decoration: none;
+}
+
+.logo-mark {
+  fill: var(--wick);
+}
+
+.logo-mark-open {
+  fill: none;
+  stroke: var(--wick);
+  stroke-width: 1.5;
+}
+
+.nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--bone);
+  cursor: pointer;
+}
+
+.nav-toggle path {
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  transform-origin: center;
+  transition: transform 200ms ease;
+}
+
+/* The two bars rotate into an X when open */
+.nav-toggle[aria-expanded="true"] .nav-toggle-top { transform: translateY(3px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bottom { transform: translateY(-3px) rotate(-45deg); }
+
+.nav-menu a {
+  display: block;
+  padding: 0.75rem 0;
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.nav-menu a:hover,
+.nav-menu a[aria-current] {
+  color: var(--wick);
+}
+
+/* Mobile with JS: menu is a dropdown panel, closed by default */
+.js .nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 1rem 1rem;
+  background: var(--hearth);
+  border-bottom: 1px solid var(--soot);
+}
+
+.js .nav-menu.is-open {
+  display: block;
+}
+
+/* Mobile without JS: no toggle, links wrap onto a second row */
+html:not(.js) .nav-toggle {
+  display: none;
+}
+
+html:not(.js) .site-nav {
+  order: 3;
+  flex-basis: 100%;
+}
+
+html:not(.js) .nav-menu {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 2rem;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .site-nav,
+  html:not(.js) .site-nav {
+    order: 0;
+    flex: 1;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu,
+  .js .nav-menu {
+    display: flex;
+    position: static;
+    gap: 1.75rem;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  .nav-menu a {
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .nav-menu a[aria-current] {
+    border-bottom-color: var(--wick);
+  }
+
+  .button--small {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* ---------- Sections (shells; filled in later tasks) ---------- */
+main > section {
+  padding-block: var(--space-xl);
+}
+
+/* ---------- Reduced motion: no transitions anywhere ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
