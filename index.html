@@ -66,8 +66,61 @@
   <main id="main">
     <!-- 2. Hero (Task 2) -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="container">
-        <h1 id="hero-title">Miss a day. Keep the habit.</h1>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-title">Miss a day. Keep the habit.</h1>
+          <p class="hero-sub">Tallow tracks one habit at a time. When life gets in the way, your streak dims instead of resetting to zero.</p>
+          <div class="hero-actions">
+            <a class="button" href="#waitlist">Join the waitlist</a>
+            <a class="button button--ghost" href="#how">See how it works</a>
+          </div>
+          <p class="hero-note">Coming to iOS and Android in spring 2027. One email when it's ready, nothing else.</p>
+        </div>
+
+        <!-- Phone mockup: the streak grid is the only part exposed to assistive tech -->
+        <div class="phone">
+          <div class="phone-head" aria-hidden="true">
+            <p class="phone-habit">Evening walk</p>
+            <p class="phone-meta">Day 28 · logged 9:41 pm</p>
+          </div>
+          <div class="streak-wrap">
+            <div class="weekdays" aria-hidden="true">
+              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            </div>
+            <!-- Day 19 is the missed day: dashed outline + slash, so it reads without colour -->
+            <div class="streak" role="img" aria-label="Streak calendar: 27 of the last 28 days done. Day 19 missed, streak kept.">
+              <span class="day day--done" style="--i:1"></span>
+              <span class="day day--done" style="--i:2"></span>
+              <span class="day day--done" style="--i:3"></span>
+              <span class="day day--done" style="--i:4"></span>
+              <span class="day day--done" style="--i:5"></span>
+              <span class="day day--done" style="--i:6"></span>
+              <span class="day day--done" style="--i:7"></span>
+              <span class="day day--done" style="--i:8"></span>
+              <span class="day day--done" style="--i:9"></span>
+              <span class="day day--done" style="--i:10"></span>
+              <span class="day day--done" style="--i:11"></span>
+              <span class="day day--done" style="--i:12"></span>
+              <span class="day day--done" style="--i:13"></span>
+              <span class="day day--done" style="--i:14"></span>
+              <span class="day day--done" style="--i:15"></span>
+              <span class="day day--done" style="--i:16"></span>
+              <span class="day day--done" style="--i:17"></span>
+              <span class="day day--done" style="--i:18"></span>
+              <span class="day day--missed" style="--i:19"></span>
+              <span class="day day--done" style="--i:20"></span>
+              <span class="day day--done" style="--i:21"></span>
+              <span class="day day--done" style="--i:22"></span>
+              <span class="day day--done" style="--i:23"></span>
+              <span class="day day--done" style="--i:24"></span>
+              <span class="day day--done" style="--i:25"></span>
+              <span class="day day--done" style="--i:26"></span>
+              <span class="day day--done" style="--i:27"></span>
+              <span class="day day--done day--today" style="--i:28"></span>
+            </div>
+            <p class="streak-count" aria-hidden="true"><strong>27 of 28 days.</strong> Streak kept.</p>
+          </div>
+        </div>
       </div>
     </section>
 

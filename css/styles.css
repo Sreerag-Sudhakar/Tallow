@@ -159,6 +159,17 @@ section[id] {
   font-size: var(--step--1);
 }
 
+.button--ghost {
+  background: transparent;
+  border-color: var(--ash);
+  color: var(--bone);
+}
+
+.button--ghost:hover {
+  background: transparent;
+  border-color: var(--bone);
+}
+
 /* ---------- 1. Navbar ---------- */
 .site-header {
   position: sticky;
@@ -315,6 +326,194 @@ html:not(.js) .nav-menu {
 /* ---------- Sections (shells; filled in later tasks) ---------- */
 main > section {
   padding-block: var(--space-xl);
+}
+
+/* ---------- 2. Hero ---------- */
+.hero {
+  padding-top: var(--space-l);
+}
+
+.hero-inner {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.hero h1 {
+  max-width: 15ch;
+}
+
+.hero-sub {
+  max-width: 34ch;
+  margin-top: var(--space-m);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin-top: var(--space-l);
+}
+
+.hero-note {
+  max-width: 36ch;
+  margin-top: var(--space-m);
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+/* Phone mockup */
+.phone {
+  position: relative;
+  width: min(100%, 18.5rem);
+  margin-inline: auto;
+  padding: 2.25rem 1.1rem 1.5rem;
+  background: var(--hearth);
+  border-radius: 2.25rem;
+  box-shadow: 0 0 0 1px var(--ash);
+}
+
+/* Speaker slot */
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 0.9rem;
+  left: 50%;
+  width: 3.5rem;
+  height: 0.35rem;
+  border-radius: 1rem;
+  background: var(--soot);
+  transform: translateX(-50%);
+}
+
+.phone-habit {
+  font: 400 var(--step-1) / 1.2 var(--font-display);
+}
+
+.phone-meta {
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.streak-wrap {
+  margin-top: 1.25rem;
+}
+
+.weekdays,
+.streak {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.weekdays {
+  margin-bottom: 0.4rem;
+  color: var(--ash);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+/* Streak grid cells */
+.day {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 4px;
+}
+
+.day--done {
+  background: var(--moss);
+}
+
+/* Check tick */
+.day--done::after {
+  content: "";
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: 26%;
+  height: 46%;
+  border: solid var(--soot);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* Missed day: dashed outline + diagonal slash */
+.day--missed {
+  border: 1.5px dashed var(--ash);
+}
+
+.day--missed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top right,
+    transparent calc(50% - 0.75px),
+    var(--ash) calc(50% - 0.75px) calc(50% + 0.75px),
+    transparent calc(50% + 0.75px));
+}
+
+.day--today {
+  outline: 2px solid var(--wick);
+  outline-offset: 2px;
+}
+
+.streak-count {
+  margin-top: 1rem;
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.streak-count strong {
+  color: var(--bone);
+}
+
+/* Page-load moment: days fill one by one, like embers catching.
+   Reduced motion skips this block entirely, so the final grid renders at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .day {
+    animation: 400ms ease-out calc(var(--i) * 40ms + 200ms) backwards day-fill;
+  }
+
+  .day--done::after {
+    animation: 300ms ease-out calc(var(--i) * 40ms + 350ms) backwards fade-in;
+  }
+
+  .day--missed {
+    animation-name: fade-in;
+  }
+
+  .day--today {
+    animation-name: day-fill-today;
+  }
+}
+
+@keyframes day-fill {
+  from { background-color: var(--soot); }
+}
+
+@keyframes day-fill-today {
+  from { background-color: var(--soot); outline-color: transparent; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding-top: var(--space-xl);
+  }
+
+  .hero-inner {
+    grid-template-columns: 1.25fr 1fr;
+    align-items: center;
+  }
+
+  .phone {
+    width: 20rem;
+    margin-inline: auto 0;
+  }
 }
 
 /* ---------- Reduced motion: no transitions anywhere ---------- */
