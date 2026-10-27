@@ -822,6 +822,20 @@ html:not(.js) .billing {
   padding: var(--space-m);
   border: 1px solid var(--hearth);
   border-radius: var(--radius);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+/* Hover (and keyboard focus inside): a hard offset, no blur, so the card lifts without glowing.
+   Ash for Free/Team, Wick for Pro to match its edge. */
+.plan:hover,
+.plan:focus-within {
+  box-shadow: 5px 5px 0 var(--ash);
+  transform: translate(-3px, -3px);
+}
+
+.plan--pro:hover,
+.plan--pro:focus-within {
+  box-shadow: 5px 5px 0 var(--wick);
 }
 
 /* Pro: the one filled panel, with a Wick edge */
