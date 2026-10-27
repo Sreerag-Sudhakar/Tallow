@@ -27,23 +27,23 @@ navMenu.addEventListener('click', (event) => {
 });
 
 /* ---------- Active nav link on scroll ---------- */
-// Marks the first linked section (in page order) that overlaps the top band of the viewport.
-// The band starts 16px below the 64px header so the previous section's sub-pixel edge doesn't count.
+// Watches every section against one line 30% down the viewport. The section crossing that line
+// is "current"; if it has a nav link (sections like the waitlist don't), that link is marked.
 const navLinks = [...navMenu.querySelectorAll('a[href^="#"]')];
-const sections = navLinks.map((link) => document.querySelector(link.hash));
-const visible = new Set();
+const sections = [...document.querySelectorAll('main > section[id]')];
+const crossing = new Set();
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
-    if (entry.isIntersecting) visible.add(entry.target);
-    else visible.delete(entry.target);
+    if (entry.isIntersecting) crossing.add(entry.target);
+    else crossing.delete(entry.target);
   });
-  const current = sections.find((section) => visible.has(section));
+  const current = sections.find((section) => crossing.has(section));
   navLinks.forEach((link) => {
     if (current && link.hash === `#${current.id}`) link.setAttribute('aria-current', 'true');
     else link.removeAttribute('aria-current');
   });
-}, { rootMargin: '-80px 0px -60% 0px' });
+}, { rootMargin: '-30% 0px -70% 0px' });
 
 sections.forEach((section) => sectionObserver.observe(section));
 

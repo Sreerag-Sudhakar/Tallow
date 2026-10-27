@@ -1047,6 +1047,84 @@ main > .waitlist {
   }
 }
 
+/* ---------- 10. Footer ---------- */
+.site-footer {
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--hearth);
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.footer-inner {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.footer-brand p {
+  margin-top: 0.5rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.footer-links a {
+  display: inline-block;
+  padding-block: 0.5rem; /* comfortable tap height */
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--wick);
+}
+
+.social {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: -0.6rem; /* optically align icons with the text edge */
+}
+
+.social a {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius);
+  color: var(--bone);
+}
+
+.social a:hover {
+  color: var(--wick);
+}
+
+.social svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-note {
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--hearth);
+}
+
+@media (min-width: 48rem) {
+  .footer-inner {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    column-gap: var(--space-l);
+  }
+
+  .footer-note {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);
