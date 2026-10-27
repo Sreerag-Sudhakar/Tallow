@@ -96,6 +96,10 @@ const MESSAGES = {
   error: 'That didn’t go through. Your email is still here, so try again.',
 };
 
+// DEMO MODE: while the action still holds the placeholder, valid emails get a simulated success
+// and nothing is sent. Paste a real Formspree ID into the form action and this switches off.
+const isDemoMode = () => waitlistForm.action.includes('YOUR_FORM_ID');
+
 // Something@something.tld, with a TLD of 2+ characters and no spaces
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -136,12 +140,16 @@ waitlistForm.addEventListener('submit', async (event) => {
   setSending(true);
 
   try {
-    const response = await fetch(waitlistForm.action, {
-      method: 'POST',
-      body: new FormData(waitlistForm),
-      headers: { Accept: 'application/json' },
-    });
-    if (!response.ok) throw new Error(`Formspree responded ${response.status}`);
+    if (isDemoMode()) {
+      await new Promise((resolve) => setTimeout(resolve, 700));
+    } else {
+      const response = await fetch(waitlistForm.action, {
+        method: 'POST',
+        body: new FormData(waitlistForm),
+        headers: { Accept: 'application/json' },
+      });
+      if (!response.ok) throw new Error(`Formspree responded ${response.status}`);
+    }
     waitlistForm.reset();
     showMessage('success', 'success');
   } catch {
