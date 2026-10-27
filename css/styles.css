@@ -500,6 +500,38 @@ main > section {
   from { opacity: 0; }
 }
 
+/* ---------- 3. Social proof strip ---------- */
+main > .proof {
+  padding-block: var(--space-m);
+  border-block: 1px solid var(--hearth);
+}
+
+.proof-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s) var(--space-l);
+}
+
+/* Inline flow (not flex) so long text wraps word by word */
+.proof-item {
+  color: var(--ash);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.proof-num {
+  color: var(--bone);
+  font: 500 var(--step-2) / 1.1 var(--font-display);
+}
+
+.stars {
+  display: inline-block;
+  margin-right: 0.3rem;
+  vertical-align: -0.1em;
+  fill: var(--wick);
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);
