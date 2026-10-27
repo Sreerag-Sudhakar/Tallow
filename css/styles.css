@@ -75,6 +75,10 @@ h3 {
 h1 { font-size: var(--step-4); letter-spacing: -0.02em; }
 h2 { font-size: var(--step-3); letter-spacing: -0.01em; }
 
+p {
+  text-wrap: pretty; /* avoids one-word last lines */
+}
+
 a {
   color: var(--wick);
 }
@@ -615,6 +619,77 @@ main > .proof {
 
   .feature--lead {
     grid-column: span 2;
+  }
+}
+
+/* ---------- 5. How it works ---------- */
+/* Mobile: numeral in a left column, steps joined by a vertical rule.
+   Desktop: three columns joined by a horizontal rule. */
+.steps {
+  display: grid;
+  gap: var(--space-l);
+  margin-top: var(--space-l);
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  column-gap: var(--space-s);
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  grid-row: span 2;
+  color: var(--wick);
+  font: italic 400 var(--step-4) / 0.9 var(--font-display);
+}
+
+/* Connector between steps */
+.steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 4rem;
+  bottom: calc(var(--space-l) * -1 + 0.5rem);
+  left: 1rem;
+  border-left: 1px solid var(--ash);
+  opacity: 0.4;
+}
+
+.steps h3 {
+  font-size: var(--step-2);
+}
+
+.steps p {
+  margin-top: 0.5rem;
+  color: var(--ash);
+}
+
+@media (min-width: 48rem) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+
+  .steps li {
+    grid-template-columns: 1fr;
+  }
+
+  .steps li::before {
+    margin-bottom: var(--space-m);
+  }
+
+  .steps li:not(:last-child)::after {
+    top: 2rem;
+    bottom: auto;
+    left: 3.5rem;
+    right: 0;
+    border-left: 0;
+    border-top: 1px solid var(--ash);
   }
 }
 
