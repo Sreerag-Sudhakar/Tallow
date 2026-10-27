@@ -693,6 +693,85 @@ main > .proof {
   }
 }
 
+/* ---------- 6. Testimonials ---------- */
+.quotes {
+  display: grid;
+  gap: var(--space-l);
+  margin-top: var(--space-l);
+}
+
+.quote blockquote {
+  color: var(--bone);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+/* Lead quote set large in the display face, with a hanging opening mark */
+.quote--lead blockquote {
+  font: 400 var(--step-3) / 1.2 var(--font-display);
+}
+
+.quote--lead blockquote p::before,
+.quote--lead blockquote p::after {
+  content: "“";
+  color: var(--wick);
+}
+
+.quote--lead blockquote p::after {
+  content: "”";
+}
+
+.quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-top: var(--space-m);
+  font-size: var(--step--1);
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--hearth);
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.quote-name {
+  display: block;
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.quote-role {
+  color: var(--ash);
+}
+
+@media (min-width: 48rem) {
+  .quotes {
+    grid-template-columns: 3fr 2fr;
+    column-gap: var(--space-xl);
+  }
+
+  .quote--lead {
+    grid-row: span 2;
+  }
+
+  .quote--lead blockquote p::before {
+    position: absolute;
+    margin-left: -0.5em;
+  }
+
+  .quote:not(.quote--lead) {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--hearth);
+  }
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);
