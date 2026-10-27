@@ -440,6 +440,12 @@ main > section {
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
+/* After the miss the streak dims, then recovers: Moss at 65/75/85% over Hearth.
+   Each stays >= 3.15:1 against the phone, and the tick stays visible. */
+.day--dim-1 { background: #788159; }
+.day--dim-2 { background: #828E60; }
+.day--dim-3 { background: #8D9A67; }
+
 /* Missed day: dashed outline + diagonal slash */
 .day--missed {
   border: 1.5px dashed var(--ash);

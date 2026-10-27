@@ -96,8 +96,9 @@
             <div class="weekdays" aria-hidden="true">
               <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
             </div>
-            <!-- Day 19 is the missed day: dashed outline + slash, so it reads without colour -->
-            <div class="streak" role="img" aria-label="Streak calendar: 27 of the last 28 days done. Day 19 missed, streak kept.">
+            <!-- Day 19 is the missed day: dashed outline + slash, so it reads without colour.
+                 Days 20-22 are dimmed and brighten back to full: the streak dims instead of resetting. -->
+            <div class="streak" role="img" aria-label="Streak calendar: 27 of the last 28 days done. Day 19 missed; the streak dimmed for three days, then came back to full.">
               <span class="day day--done" style="--i:1"></span>
               <span class="day day--done" style="--i:2"></span>
               <span class="day day--done" style="--i:3"></span>
@@ -117,9 +118,9 @@
               <span class="day day--done" style="--i:17"></span>
               <span class="day day--done" style="--i:18"></span>
               <span class="day day--missed" style="--i:19"></span>
-              <span class="day day--done" style="--i:20"></span>
-              <span class="day day--done" style="--i:21"></span>
-              <span class="day day--done" style="--i:22"></span>
+              <span class="day day--done day--dim-1" style="--i:20"></span>
+              <span class="day day--done day--dim-2" style="--i:21"></span>
+              <span class="day day--done day--dim-3" style="--i:22"></span>
               <span class="day day--done" style="--i:23"></span>
               <span class="day day--done" style="--i:24"></span>
               <span class="day day--done" style="--i:25"></span>
@@ -127,7 +128,7 @@
               <span class="day day--done" style="--i:27"></span>
               <span class="day day--done day--today" style="--i:28"></span>
             </div>
-            <p class="streak-count" aria-hidden="true"><strong>27 of 28 days.</strong> Streak kept.</p>
+            <p class="streak-count" aria-hidden="true"><strong>27 of 28 days.</strong> Dimmed, never reset.</p>
           </div>
         </div>
       </div>
