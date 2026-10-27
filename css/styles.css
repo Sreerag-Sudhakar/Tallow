@@ -532,6 +532,92 @@ main > .proof {
   fill: var(--wick);
 }
 
+/* ---------- Shared section intro ---------- */
+.section-lead {
+  max-width: 40rem;
+  margin-top: var(--space-m);
+  color: var(--ash);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+/* ---------- 4. Features ---------- */
+.feature-list {
+  display: grid;
+  gap: var(--space-l) var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.feature h3 {
+  margin-top: var(--space-s);
+  font-size: var(--step-1);
+}
+
+.feature p {
+  margin-top: 0.5rem;
+  color: var(--ash);
+}
+
+.feature-icon {
+  fill: none;
+  stroke: var(--wick);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The lead feature is the product's core idea: give it a panel and a bigger voice */
+.feature--lead {
+  padding: var(--space-m);
+  background: var(--hearth);
+  border-radius: var(--radius);
+}
+
+.feature--lead h3 {
+  font-size: var(--step-2);
+}
+
+.feature--lead .feature-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.feature--lead p {
+  max-width: 36rem;
+}
+
+/* The others sit on the page with a thin rule above, no box */
+.feature:not(.feature--lead) {
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--hearth);
+}
+
+@media (min-width: 48rem) {
+  .feature-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature--lead {
+    grid-column: 1 / -1;
+    padding: var(--space-l);
+  }
+
+  .feature--lead p {
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+}
+
+@media (min-width: 64rem) {
+  .feature-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature--lead {
+    grid-column: span 2;
+  }
+}
+
 @media (min-width: 48rem) {
   .hero {
     padding-top: var(--space-xl);
