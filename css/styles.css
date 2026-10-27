@@ -47,6 +47,8 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Anchor jumps and keyboard focus both stop clear of the sticky header */
+  scroll-padding-top: calc(var(--header-h) + 1rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -95,10 +97,6 @@ svg {
 :focus-visible {
   outline: 2px solid var(--wick);
   outline-offset: 3px;
-}
-
-section[id] {
-  scroll-margin-top: var(--header-h);
 }
 
 .container {
@@ -914,6 +912,15 @@ html:not(.js) .billing {
   border-bottom: 1px solid var(--hearth);
 }
 
+.faq-item h3 {
+  font-size: var(--step-1);
+}
+
+/* Without JS the question is a plain heading above its open answer */
+html:not(.js) .faq-item h3 {
+  padding: var(--space-m) 0 0.5rem;
+}
+
 .faq-q {
   display: flex;
   justify-content: space-between;
@@ -925,7 +932,6 @@ html:not(.js) .billing {
   background: none;
   color: var(--bone);
   font: inherit;
-  font-size: var(--step-1);
   text-align: left;
   cursor: pointer;
 }
@@ -1022,7 +1028,8 @@ main > .waitlist {
   border: 2px solid var(--rust);
 }
 
-.waitlist-form button[disabled] {
+/* aria-disabled (not disabled) so a focused button keeps focus while sending */
+.waitlist-form button[aria-disabled="true"] {
   cursor: progress;
   opacity: 0.75;
 }

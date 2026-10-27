@@ -54,7 +54,7 @@ Pairs that must hold (AA, 4.5 for text, 3.0 for UI): bone/soot 12.29, bone/heart
 
 ## Review Focus
 
-1. **Keyboard user opens the mobile menu:** Focus moves into it, Esc closes it and returns focus to the hamburger, and Tab doesn't reach hidden links. Pinned in Task 1.
+1. **Keyboard user opens the mobile menu:** Focus stays on the toggle and the next Tab reaches the first link (disclosure pattern). Esc closes the menu and returns focus to the hamburger, Tab doesn't reach hidden links, and tabbing or clicking out of the nav closes it. Pinned in Task 1.
 2. **Form submitted twice, or the network fails:** The button is disabled while sending, an error message appears and is announced, and the typed email is kept. Pinned in Task 9.
 3. **Email with spaces or uppercase letters:** It is trimmed before validating, and `name@site` (no TLD) is rejected. Pinned in Task 9.
 4. **Pricing toggle with a screen reader:** The toggle is a real control (`aria-pressed` or radio group), and price changes are perceivable. Pinned in Task 7.

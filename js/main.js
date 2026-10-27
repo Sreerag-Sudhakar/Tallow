@@ -1,8 +1,10 @@
 /* Tallow landing page: interactive parts only. Everything works without JS; this layers on top. */
 
 /* ---------- Mobile menu ---------- */
+const siteNav = document.querySelector('.site-nav');
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.getElementById('nav-menu');
+const isMenuOpen = () => navMenu.classList.contains('is-open');
 
 function setMenu(open) {
   navToggle.setAttribute('aria-expanded', String(open));
@@ -10,20 +12,30 @@ function setMenu(open) {
 }
 
 navToggle.addEventListener('click', () => {
-  setMenu(navToggle.getAttribute('aria-expanded') !== 'true');
+  setMenu(!isMenuOpen());
 });
 
-// Esc closes the menu and returns focus to the toggle
+// Esc closes the menu; focus goes back to the toggle only if it was inside the menu
 document.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape' && navMenu.classList.contains('is-open')) {
+  if (event.key === 'Escape' && isMenuOpen()) {
+    const focusWasInside = siteNav.contains(document.activeElement);
     setMenu(false);
-    navToggle.focus();
+    if (focusWasInside) navToggle.focus();
   }
 });
 
 // Choosing a link closes the menu
 navMenu.addEventListener('click', (event) => {
   if (event.target.closest('a')) setMenu(false);
+});
+
+// Tabbing out of the nav, or clicking anywhere else, closes it so the panel never covers focus
+siteNav.addEventListener('focusout', (event) => {
+  if (isMenuOpen() && !siteNav.contains(event.relatedTarget)) setMenu(false);
+});
+
+document.addEventListener('click', (event) => {
+  if (isMenuOpen() && !siteNav.contains(event.target)) setMenu(false);
 });
 
 /* ---------- Active nav link on scroll ---------- */
@@ -51,7 +63,8 @@ sections.forEach((section) => sectionObserver.observe(section));
 const billingButtons = document.querySelectorAll('[data-billing]');
 const billingStatus = document.getElementById('billing-status');
 
-// period: 'monthly' | 'yearly'. Swaps every price that has data-monthly/data-yearly.
+// period: 'monthly' | 'yearly'. Swaps every price that has data-monthly/data-yearly,
+// then announces the new prices in words, e.g. "Pro $48 per year".
 function setBilling(period) {
   billingButtons.forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.billing === period));
@@ -59,7 +72,14 @@ function setBilling(period) {
   document.querySelectorAll('[data-monthly]').forEach((el) => {
     el.textContent = el.dataset[period];
   });
-  billingStatus.textContent = `Showing ${period} prices.`;
+  const prices = [...document.querySelectorAll('.plan')]
+    .filter((plan) => plan.querySelector('.price-amount[data-monthly]'))
+    .map((plan) => [
+      plan.querySelector('h3').textContent,
+      plan.querySelector('.price-amount').textContent,
+      plan.querySelector('.price-period .visually-hidden').textContent,
+    ].join(' '));
+  billingStatus.textContent = `Showing ${period} prices: ${prices.join(', ')}.`;
 }
 
 billingButtons.forEach((button) => {
@@ -67,9 +87,17 @@ billingButtons.forEach((button) => {
 });
 
 /* ---------- FAQ accordion ---------- */
-// Answers ship open (readable without JS). Collapse them here; each question toggles on its own.
-document.querySelectorAll('.faq-q').forEach((button) => {
-  const panel = document.getElementById(button.getAttribute('aria-controls'));
+// Without JS each question is a plain heading over an open answer. Here each h3[data-controls]
+// gets a real button (aria-expanded/aria-controls), its answer collapses, and each toggles on its own.
+document.querySelectorAll('.faq-item h3[data-controls]').forEach((heading) => {
+  const panel = document.getElementById(heading.dataset.controls);
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'faq-q';
+  button.setAttribute('aria-controls', panel.id);
+  button.append(...heading.childNodes);
+  button.insertAdjacentHTML('beforeend', '<span class="faq-icon" aria-hidden="true"></span>');
+  heading.append(button);
 
   function setOpen(open) {
     button.setAttribute('aria-expanded', String(open));
@@ -90,6 +118,7 @@ const formMessage = document.getElementById('waitlist-msg');
 const submitButton = waitlistForm.querySelector('button[type="submit"]');
 
 const MESSAGES = {
+  sending: 'Saving your spot…',
   empty: 'Add your email so we can save your spot.',
   format: 'That email looks incomplete. Check for a typo?',
   success: 'You’re on the list. We’ll write once, when Tallow is ready.',
@@ -110,14 +139,28 @@ function validateEmail(value) {
   return EMAIL_PATTERN.test(email) ? '' : 'format';
 }
 
+// Clear, then write on the next tick, so screen readers announce a message even if it repeats
+let messageTimer;
 function showMessage(key, state) {
-  formMessage.textContent = MESSAGES[key];
-  formMessage.dataset.state = state;
+  clearMessage();
+  messageTimer = setTimeout(() => {
+    formMessage.textContent = MESSAGES[key];
+    formMessage.dataset.state = state;
+  }, 50);
 }
 
-function setSending(sending) {
-  submitButton.disabled = sending;
-  waitlistForm.setAttribute('aria-busy', String(sending));
+function clearMessage() {
+  clearTimeout(messageTimer);
+  formMessage.textContent = '';
+  delete formMessage.dataset.state;
+}
+
+// aria-disabled instead of disabled: a focused button keeps focus; the flag blocks double submits
+let sending = false;
+function setSending(on) {
+  sending = on;
+  if (on) submitButton.setAttribute('aria-disabled', 'true');
+  else submitButton.removeAttribute('aria-disabled');
 }
 
 // JS takes over validation so messages are ours, not the browser's bubbles
@@ -125,7 +168,7 @@ waitlistForm.noValidate = true;
 
 waitlistForm.addEventListener('submit', async (event) => {
   event.preventDefault();
-  if (submitButton.disabled) return; // a request is already in flight
+  if (sending) return; // a request is already in flight
 
   const problem = validateEmail(emailInput.value);
   if (problem) {
@@ -138,9 +181,11 @@ waitlistForm.addEventListener('submit', async (event) => {
   emailInput.value = emailInput.value.trim();
   emailInput.removeAttribute('aria-invalid');
   setSending(true);
+  showMessage('sending', 'pending');
 
   try {
     if (isDemoMode()) {
+      console.warn('Tallow waitlist is in demo mode: no email was sent. Replace YOUR_FORM_ID in index.html to collect signups.');
       await new Promise((resolve) => setTimeout(resolve, 700));
     } else {
       const response = await fetch(waitlistForm.action, {
@@ -151,11 +196,11 @@ waitlistForm.addEventListener('submit', async (event) => {
       if (!response.ok) throw new Error(`Formspree responded ${response.status}`);
     }
     waitlistForm.reset();
+    setSending(false);
     showMessage('success', 'success');
   } catch {
-    showMessage('error', 'error'); // email stays in the field for a retry
-  } finally {
     setSending(false);
+    showMessage('error', 'error'); // email stays in the field for a retry
   }
 });
 
@@ -163,7 +208,9 @@ waitlistForm.addEventListener('submit', async (event) => {
 emailInput.addEventListener('input', () => {
   if (emailInput.hasAttribute('aria-invalid')) {
     emailInput.removeAttribute('aria-invalid');
-    formMessage.textContent = '';
-    delete formMessage.dataset.state;
+    clearMessage();
   }
 });
+
+// Everything above ran: tell the page's load-time fallback that JS is really in charge
+document.documentElement.classList.add('js-ready');
