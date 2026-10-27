@@ -7,7 +7,7 @@ A conversion-focused waitlist page for **Tallow**, a habit-tracking app for busy
 ## What's in it
 
 - A sticky navbar with a mobile menu (Esc closes it and returns focus) and active-link highlighting on scroll
-- A hero with a CSS-built phone and a 28-day streak grid that fills in on load. Day 19 is missed and reads as missed without relying on colour.
+- A hero with a CSS-built phone and a 28-day streak grid that fills in on load. Day 19 is missed (dashed and slashed, so it reads without colour), and days 20–22 dim, then recover.
 - A social proof strip, five features, three steps, and three testimonials
 - Pricing with a monthly/yearly toggle (Free, Pro, Team)
 - An accessible FAQ accordion (`aria-expanded`, keyboard operable, readable without JS)
@@ -81,3 +81,68 @@ The site is static: no build command, and the output directory is the project ro
 
 - In `index.html`, change `og:image` to the absolute URL (for example `https://your-site.netlify.app/assets/og.png`) so link previews show the image.
 - Replace the `href="#"` social links in the footer with real profile URLs, or remove them.
+
+## Quality (measured)
+
+Lighthouse 13.5.0 against a local static server:
+
+| Run | Performance | Accessibility | Best Practices | SEO |
+|---|---|---|---|---|
+| Mobile | 100 | 100 | 100 | 100 |
+| Desktop | 100 | 100 | 100 | 100 |
+
+Mobile timings: FCP 0.9 s, LCP 1.2 s, TBT 0 ms, CLS 0.001. Re-run Lighthouse after deploying to confirm on the live host.
+
+Other checks:
+
+- Rendered text contrast is 5.31:1 at worst (WCAG AA).
+- 31 keyboard tab stops, each with a visible focus ring.
+- No unused CSS selectors.
+- No horizontal scroll at 360px.
+
+## Manual test checklist
+
+Run these at 360px and at desktop width.
+
+**Mobile menu**
+- [ ] The ☰ button opens the menu on tap, Enter and Space.
+- [ ] Esc closes the menu and puts focus back on ☰.
+- [ ] Tabbing past the last link closes the menu.
+- [ ] Tapping outside the menu closes it.
+- [ ] Tapping a link closes the menu and scrolls to that section, clear of the sticky header.
+
+**Active nav link**
+- [ ] Scrolling through Features, How it works, Pricing and FAQ highlights the matching link.
+- [ ] Nothing is highlighted in the hero or the waitlist.
+
+**Waitlist form**
+- [ ] Submitting empty shows "Add your email so we can save your spot." The field turns Rust and focus returns to it.
+- [ ] `name@site` shows "That email looks incomplete. Check for a typo?"
+- [ ] Typing after an error clears the error.
+- [ ] A valid email (`  A@B.COM  ` is trimmed) shows "Saving your spot…", then the Moss success message, and the field clears.
+- [ ] Double-clicking the button sends one request (real endpoint).
+- [ ] When offline with a real endpoint, an error appears and the email stays in the field.
+- [ ] Enter in the field submits.
+
+**Pricing toggle**
+- [ ] Yearly shows Pro $48/yr and Team $38/seat/yr. Monthly shows $5/mo and $4/seat/mo.
+- [ ] The toggle works by click, Enter and Space.
+- [ ] A screen reader announces the new prices.
+
+**FAQ accordion**
+- [ ] Enter and Space open and close each question, and several can be open at once.
+- [ ] `aria-expanded` flips on each toggle.
+- [ ] With JS disabled, all answers are visible.
+
+**Keyboard and motion**
+- [ ] The skip link is the first Tab stop.
+- [ ] The focus ring is visible everywhere, and focus never sits under the header.
+- [ ] With "Reduce motion" on, the streak grid appears complete immediately.
+
+## Gallery
+
+Ready-made 1280×769 images for portfolio or gig listings are in [`docs/gallery/`](docs/gallery/):
+
+1. `1-hero-desktop.png`: the hero and streak grid
+2. `2-mobile-screens.png`: three 360px screens (hero, pricing, waitlist success)
+3. `3-detail-and-scores.png`: a grid close-up with the measured Lighthouse scores
