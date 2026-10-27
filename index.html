@@ -323,8 +323,48 @@
 
     <!-- 8. FAQ (Task 8) -->
     <section id="faq" aria-labelledby="faq-title">
-      <div class="container">
+      <div class="container faq-inner">
         <h2 id="faq-title">Questions, answered plainly</h2>
+
+        <!-- Accordion: answers render open without JS; main.js collapses them and wires the buttons -->
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-1">What actually happens when I miss a day?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-1" class="faq-a">
+              <p>The day shows as a gap and your streak count carries on. Miss two in a row and Tallow asks whether the habit still fits: you can shrink it, pause it, or keep going. It never resets you to zero.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-2">When does Tallow launch, and on what?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-2" class="faq-a">
+              <p>iOS and Android, in spring 2027. People on the waitlist get access about two weeks early, and we’ll email you once when it’s ready.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-3">Is my habit data private?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-3" class="faq-a">
+              <p>Yes. Sync is end-to-end encrypted, there are no public profiles, and we don’t sell or share data with advertisers. You can export or delete everything from settings.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-4">Why only one habit at a time?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-4" class="faq-a">
+              <p>Starting five habits at once is the quickest way to drop all five. Pro lets you track up to three, but each new one unlocks only after the last has held for three weeks.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-5">How does Team billing work?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-5" class="faq-a">
+              <p>Team starts at 3 seats and is billed per seat, monthly or yearly, on one invoice. Everyone gets everything in Pro, and streaks stay private unless someone chooses to share.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3><button type="button" class="faq-q" aria-expanded="true" aria-controls="faq-6">Can I cancel Pro whenever I like?<span class="faq-icon" aria-hidden="true"></span></button></h3>
+            <div id="faq-6" class="faq-a">
+              <p>Yes. Cancel from settings and Pro stays on until the end of the period you paid for. Your history stays too; you just drop back to one active habit.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

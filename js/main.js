@@ -65,3 +65,19 @@ function setBilling(period) {
 billingButtons.forEach((button) => {
   button.addEventListener('click', () => setBilling(button.dataset.billing));
 });
+
+/* ---------- FAQ accordion ---------- */
+// Answers ship open (readable without JS). Collapse them here; each question toggles on its own.
+document.querySelectorAll('.faq-q').forEach((button) => {
+  const panel = document.getElementById(button.getAttribute('aria-controls'));
+
+  function setOpen(open) {
+    button.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+  }
+
+  setOpen(false);
+  button.addEventListener('click', () => {
+    setOpen(button.getAttribute('aria-expanded') !== 'true');
+  });
+});
