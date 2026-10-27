@@ -1,0 +1,1187 @@
+/* ==========================================================================
+   Tallow landing page
+   Mobile-first. Breakpoint: 48rem (768px) for the desktop nav and wide layouts.
+   ========================================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Palette. Contrast ratios against Soot/Hearth are in the README. */
+  --soot: #2B2621;   /* page background: warm, lifted off black */
+  --hearth: #36302A; /* raised surfaces */
+  --bone: #EFE8DA;   /* primary text */
+  --ash: #ABA597;    /* secondary text, outlines */
+  --wick: #E8A33D;   /* actions, links, focus */
+  --moss: #9CAD72;   /* real states only: done, success */
+  --rust: #F2967A;   /* functional only: errors */
+
+  --font-display: "Newsreader", Georgia, serif;
+  --font-body: "Manrope", system-ui, sans-serif;
+
+  /* Fluid type scale: ~1.25 ratio at 360px, ~1.333 at 1280px */
+  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.17rem + 0.4vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.4rem + 0.8vw, 2rem);
+  --step-3: clamp(1.95rem, 1.6rem + 1.6vw, 2.8rem);
+  --step-4: clamp(2.44rem, 1.8rem + 3vw, 4.2rem);
+
+  --space-s: 0.75rem;
+  --space-m: 1.5rem;
+  --space-l: 3rem;
+  --space-xl: clamp(4rem, 3rem + 5vw, 7.5rem);
+
+  --header-h: 4rem;
+  --radius: 6px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Anchor jumps and keyboard focus both stop clear of the sticky header */
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  background: var(--soot);
+  color: var(--bone);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-4); letter-spacing: -0.02em; }
+h2 { font-size: var(--step-3); letter-spacing: -0.01em; }
+
+p {
+  text-wrap: pretty; /* avoids one-word last lines */
+}
+
+a {
+  color: var(--wick);
+}
+
+ul[class] {
+  list-style: none;
+  padding: 0;
+}
+
+svg {
+  display: block;
+}
+
+:focus-visible {
+  outline: 2px solid var(--wick);
+  outline-offset: 3px;
+}
+
+.container {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 20;
+  padding: 0.5rem 1rem;
+  background: var(--bone);
+  color: var(--soot);
+  border-radius: var(--radius);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-block;
+  padding: 0.85rem 1.4rem;
+  border: 2px solid var(--wick);
+  border-radius: var(--radius);
+  background: var(--wick);
+  color: var(--soot);
+  font: 700 var(--step-0) / 1.2 var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 150ms, border-color 150ms;
+}
+
+.button:hover {
+  background: var(--bone);
+  border-color: var(--bone);
+}
+
+.button--small {
+  padding: 0.5rem 0.8rem;
+  font-size: var(--step--1);
+}
+
+.button--ghost {
+  background: transparent;
+  border-color: var(--ash);
+  color: var(--bone);
+}
+
+.button--ghost:hover {
+  background: transparent;
+  border-color: var(--bone);
+}
+
+/* ---------- 1. Navbar ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--soot);
+  border-bottom: 1px solid var(--hearth);
+}
+
+.header-inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: var(--header-h);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+  color: var(--bone);
+  font: 400 var(--step-1) / 1 var(--font-display);
+  text-decoration: none;
+}
+
+.logo-mark {
+  fill: var(--wick);
+}
+
+.logo-mark-open {
+  fill: none;
+  stroke: var(--wick);
+  stroke-width: 1.5;
+}
+
+.nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  color: var(--bone);
+  cursor: pointer;
+}
+
+.nav-toggle path {
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  transform-origin: center;
+  transition: transform 200ms ease;
+}
+
+/* The two bars rotate into an X when open */
+.nav-toggle[aria-expanded="true"] .nav-toggle-top { transform: translateY(3px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bottom { transform: translateY(-3px) rotate(-45deg); }
+
+.nav-menu a {
+  display: block;
+  padding: 0.75rem 0;
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.nav-menu a:hover,
+.nav-menu a[aria-current] {
+  color: var(--wick);
+}
+
+/* Mobile with JS: menu is a dropdown panel, closed by default */
+.js .nav-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 1rem 1rem;
+  background: var(--hearth);
+  border-bottom: 1px solid var(--soot);
+}
+
+.js .nav-menu.is-open {
+  display: block;
+}
+
+/* Mobile without JS: no toggle, links wrap onto a second row */
+html:not(.js) .nav-toggle {
+  display: none;
+}
+
+html:not(.js) .site-nav {
+  order: 3;
+  flex-basis: 100%;
+}
+
+html:not(.js) .nav-menu {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.25rem;
+}
+
+@media (min-width: 48rem) {
+  .header-inner {
+    flex-wrap: nowrap;
+    gap: 2rem;
+  }
+
+  .logo {
+    margin-right: 0;
+  }
+
+  .site-nav,
+  html:not(.js) .site-nav {
+    order: 0;
+    flex: 1;
+  }
+
+  .nav-toggle {
+    display: none;
+  }
+
+  .nav-menu,
+  .js .nav-menu {
+    display: flex;
+    position: static;
+    gap: 1.75rem;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+
+  .nav-menu a {
+    padding: 0.25rem 0;
+    border-bottom: 2px solid transparent;
+    font-size: var(--step--1);
+    font-weight: 500;
+  }
+
+  .nav-menu a[aria-current] {
+    border-bottom-color: var(--wick);
+  }
+
+  .button--small {
+    padding: 0.6rem 1rem;
+  }
+}
+
+/* ---------- Sections (shells; filled in later tasks) ---------- */
+main > section {
+  padding-block: var(--space-xl);
+}
+
+/* ---------- 2. Hero ---------- */
+.hero {
+  padding-top: var(--space-l);
+}
+
+.hero-inner {
+  display: grid;
+  gap: var(--space-l);
+}
+
+.hero h1 {
+  max-width: 15ch;
+}
+
+.hero-sub {
+  max-width: 34ch;
+  margin-top: var(--space-m);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin-top: var(--space-l);
+}
+
+.hero-note {
+  max-width: 36ch;
+  margin-top: var(--space-m);
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+/* Phone mockup */
+.phone {
+  position: relative;
+  width: min(100%, 18.5rem);
+  margin-inline: auto;
+  padding: 2.25rem 1.1rem 1.5rem;
+  background: var(--hearth);
+  border-radius: 2.25rem;
+  box-shadow: 0 0 0 1px var(--ash);
+}
+
+/* Speaker slot */
+.phone::before {
+  content: "";
+  position: absolute;
+  top: 0.9rem;
+  left: 50%;
+  width: 3.5rem;
+  height: 0.35rem;
+  border-radius: 1rem;
+  background: var(--soot);
+  transform: translateX(-50%);
+}
+
+.phone-habit {
+  font: 400 var(--step-1) / 1.2 var(--font-display);
+}
+
+.phone-meta {
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.streak-wrap {
+  margin-top: 1.25rem;
+}
+
+.weekdays,
+.streak {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.4rem;
+}
+
+.weekdays {
+  margin-bottom: 0.4rem;
+  color: var(--ash);
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+/* Streak grid cells */
+.day {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 4px;
+}
+
+.day--done {
+  background: var(--moss);
+}
+
+/* Check tick */
+.day--done::after {
+  content: "";
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  width: 26%;
+  height: 46%;
+  border: solid var(--soot);
+  border-width: 0 2px 2px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+/* After the miss the streak dims, then recovers: Moss at 65/75/85% over Hearth.
+   Each stays >= 3.15:1 against the phone, and the tick stays visible. */
+.day--dim-1 { background: #788159; }
+.day--dim-2 { background: #828E60; }
+.day--dim-3 { background: #8D9A67; }
+
+/* Missed day: dashed outline + diagonal slash */
+.day--missed {
+  border: 1.5px dashed var(--ash);
+}
+
+.day--missed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top right,
+    transparent calc(50% - 0.75px),
+    var(--ash) calc(50% - 0.75px) calc(50% + 0.75px),
+    transparent calc(50% + 0.75px));
+}
+
+.day--today {
+  outline: 2px solid var(--wick);
+  outline-offset: 2px;
+}
+
+.streak-count {
+  margin-top: 1rem;
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.streak-count strong {
+  color: var(--bone);
+}
+
+/* Page-load moment: days fill one by one, like embers catching.
+   Reduced motion skips this block entirely, so the final grid renders at once. */
+@media (prefers-reduced-motion: no-preference) {
+  .day {
+    animation: 400ms ease-out calc(var(--i) * 40ms + 200ms) backwards day-fill;
+  }
+
+  .day--done::after {
+    animation: 300ms ease-out calc(var(--i) * 40ms + 350ms) backwards fade-in;
+  }
+
+  .day--missed {
+    animation-name: fade-in;
+  }
+
+  .day--today {
+    animation-name: day-fill-today;
+  }
+}
+
+@keyframes day-fill {
+  from { background-color: var(--soot); }
+}
+
+@keyframes day-fill-today {
+  from { background-color: var(--soot); outline-color: transparent; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+}
+
+/* ---------- 3. Social proof strip ---------- */
+main > .proof {
+  padding-block: var(--space-m);
+  border-block: 1px solid var(--hearth);
+}
+
+.proof-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-s) var(--space-l);
+}
+
+/* Inline flow (not flex) so long text wraps word by word */
+.proof-item {
+  color: var(--ash);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.proof-num {
+  color: var(--bone);
+  font: 400 var(--step-2) / 1.1 var(--font-display);
+}
+
+.stars {
+  display: inline-block;
+  margin-right: 0.3rem;
+  vertical-align: -0.1em;
+  fill: var(--wick);
+}
+
+/* ---------- Shared section intro ---------- */
+.section-lead {
+  max-width: 40rem;
+  margin-top: var(--space-m);
+  color: var(--ash);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}
+
+/* ---------- 4. Features ---------- */
+.feature-list {
+  display: grid;
+  gap: var(--space-l) var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.feature h3 {
+  margin-top: var(--space-s);
+  font-size: var(--step-1);
+}
+
+.feature p {
+  margin-top: 0.5rem;
+  color: var(--ash);
+}
+
+.feature-icon {
+  fill: none;
+  stroke: var(--wick);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The lead feature is the product's core idea: give it a panel and a bigger voice */
+.feature--lead {
+  padding: var(--space-m);
+  background: var(--hearth);
+  border-radius: var(--radius);
+}
+
+.feature--lead h3 {
+  font-size: var(--step-2);
+}
+
+.feature--lead .feature-icon {
+  width: 3rem;
+  height: 3rem;
+}
+
+.feature--lead p {
+  max-width: 36rem;
+}
+
+/* The others sit on the page with a thin rule above, no box */
+.feature:not(.feature--lead) {
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--hearth);
+}
+
+@media (min-width: 48rem) {
+  .feature-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature--lead {
+    grid-column: 1 / -1;
+    padding: var(--space-l);
+  }
+
+  .feature--lead p {
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+}
+
+/* Wide screens: the lead runs full width with heading and text side by side; the other four share a row */
+@media (min-width: 64rem) {
+  .feature-list {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .feature--lead {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    column-gap: var(--space-l);
+    align-items: center;
+  }
+
+  .feature--lead p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+  }
+
+  /* Keep icon and heading together at the vertical middle of the panel */
+  .feature--lead .feature-icon { align-self: end; }
+  .feature--lead h3 { align-self: start; }
+}
+
+/* ---------- 5. How it works ---------- */
+/* Mobile: numeral in a left column, steps joined by a vertical rule.
+   Desktop: three columns joined by a horizontal rule. */
+.steps {
+  display: grid;
+  gap: var(--space-l);
+  margin-top: var(--space-l);
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  column-gap: var(--space-s);
+  counter-increment: step;
+}
+
+.steps li::before {
+  content: counter(step);
+  grid-row: span 2;
+  color: var(--wick);
+  font: italic 400 var(--step-4) / 0.9 var(--font-display);
+}
+
+/* Connector between steps */
+.steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 4rem;
+  bottom: calc(var(--space-l) * -1 + 0.5rem);
+  left: 1rem;
+  border-left: 1px solid var(--ash);
+  opacity: 0.4;
+}
+
+.steps h3 {
+  font-size: var(--step-2);
+}
+
+.steps p {
+  margin-top: 0.5rem;
+  color: var(--ash);
+}
+
+@media (min-width: 48rem) {
+  .steps {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-m);
+  }
+
+  .steps li {
+    grid-template-columns: 1fr;
+  }
+
+  .steps li::before {
+    margin-bottom: var(--space-m);
+  }
+
+  .steps li:not(:last-child)::after {
+    top: 2rem;
+    bottom: auto;
+    left: 3.5rem;
+    right: 0;
+    border-left: 0;
+    border-top: 1px solid var(--ash);
+  }
+}
+
+/* ---------- 6. Testimonials ---------- */
+.quotes {
+  display: grid;
+  gap: var(--space-l);
+  margin-top: var(--space-l);
+}
+
+.quote blockquote {
+  color: var(--bone);
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+/* Lead quote set large in the display face, with a hanging opening mark */
+.quote--lead blockquote {
+  font: 400 var(--step-3) / 1.2 var(--font-display);
+}
+
+.quote--lead blockquote p::before,
+.quote--lead blockquote p::after {
+  content: "“";
+  color: var(--wick);
+}
+
+.quote--lead blockquote p::after {
+  content: "”";
+}
+
+.quote figcaption {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  margin-top: var(--space-m);
+  font-size: var(--step--1);
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--hearth);
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.quote-name {
+  display: block;
+  color: var(--bone);
+  font-weight: 700;
+}
+
+.quote-role {
+  color: var(--ash);
+}
+
+@media (min-width: 48rem) {
+  .quotes {
+    grid-template-columns: 3fr 2fr;
+    column-gap: var(--space-xl);
+  }
+
+  .quote--lead {
+    grid-row: span 2;
+  }
+
+  .quote--lead blockquote p::before {
+    position: absolute;
+    margin-left: -0.5em;
+  }
+
+  .quote:not(.quote--lead) {
+    padding-left: var(--space-m);
+    border-left: 1px solid var(--hearth);
+  }
+}
+
+/* ---------- 7. Pricing ---------- */
+.billing {
+  display: inline-flex;
+  margin-top: var(--space-l);
+  padding: 0.25rem;
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+}
+
+html:not(.js) .billing {
+  display: none;
+}
+
+.billing button {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: var(--bone);
+  font: 500 var(--step--1) / 1.2 var(--font-body);
+  cursor: pointer;
+  transition: background-color 150ms, color 150ms;
+}
+
+.billing button[aria-pressed="true"] {
+  background: var(--bone);
+  color: var(--soot);
+}
+
+.billing-save {
+  color: var(--wick);
+}
+
+.billing [aria-pressed="true"] .billing-save {
+  color: inherit;
+}
+
+.plans {
+  display: grid;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+}
+
+.plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-m);
+  border: 1px solid var(--hearth);
+  border-radius: var(--radius);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+/* Hover (and keyboard focus inside): a hard offset, no blur, so the card lifts without glowing.
+   Ash for Free/Team, Wick for Pro to match its edge. */
+.plan:hover,
+.plan:focus-within {
+  box-shadow: 5px 5px 0 var(--ash);
+  transform: translate(-3px, -3px);
+}
+
+.plan--pro:hover,
+.plan--pro:focus-within {
+  box-shadow: 5px 5px 0 var(--wick);
+}
+
+/* Pro: the one filled panel, with a Wick edge */
+.plan--pro {
+  background: var(--hearth);
+  border: 2px solid var(--wick);
+}
+
+.plan h3 {
+  font-size: var(--step-2);
+}
+
+.plan-tag {
+  position: absolute;
+  top: -0.8rem;
+  right: var(--space-m);
+  padding: 0.15rem 0.6rem;
+  border-radius: 4px;
+  background: var(--wick);
+  color: var(--soot);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.plan-for {
+  color: var(--ash);
+}
+
+.price {
+  margin-block: var(--space-m);
+  color: var(--ash);
+}
+
+.price-amount {
+  color: var(--bone);
+  font: 400 var(--step-4) / 1 var(--font-display);
+}
+
+.plan-features {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: var(--space-l);
+}
+
+.plan-features li {
+  padding-left: 1.5rem;
+  text-wrap: pretty;
+  background: no-repeat 0 0.45em / 0.9rem url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3 3 7-7' fill='none' stroke='%23ABA597' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.plans-note {
+  margin-top: var(--space-l);
+  color: var(--ash);
+  text-align: center;
+}
+
+/* Pin each CTA to the bottom so buttons line up across plans */
+.plan .button {
+  margin-top: auto;
+  text-align: center;
+}
+
+@media (min-width: 64rem) {
+  .plans {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Pro stands out past its equal-height neighbours */
+  .plan--pro {
+    margin-block: calc(var(--space-m) * -1);
+    padding-block: var(--space-l);
+  }
+}
+
+/* ---------- 8. FAQ ---------- */
+.faq-list {
+  margin-top: var(--space-l);
+  border-top: 1px solid var(--hearth);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--hearth);
+}
+
+.faq-item h3 {
+  font-size: var(--step-1);
+}
+
+/* Without JS the question is a plain heading above its open answer */
+html:not(.js) .faq-item h3 {
+  padding: var(--space-m) 0 0.5rem;
+}
+
+.faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-m);
+  width: 100%;
+  padding: var(--space-m) 0;
+  border: 0;
+  background: none;
+  color: var(--bone);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-q:hover {
+  color: var(--wick);
+}
+
+/* Plus that turns into a minus */
+.faq-icon {
+  position: relative;
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.faq-icon::before,
+.faq-icon::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  background: currentColor;
+  transition: transform 200ms ease;
+}
+
+.faq-icon::after {
+  transform: rotate(90deg);
+}
+
+.faq-q[aria-expanded="true"] .faq-icon::after {
+  transform: rotate(0deg);
+}
+
+.faq-a {
+  max-width: 40rem;
+  padding-bottom: var(--space-m);
+  color: var(--ash);
+}
+
+@media (min-width: 48rem) {
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--space-l);
+    align-items: start;
+  }
+
+  .faq-list {
+    margin-top: 0;
+  }
+}
+
+/* ---------- 9. Final CTA / waitlist ---------- */
+main > .waitlist {
+  background: var(--hearth);
+}
+
+.waitlist-form {
+  max-width: 34rem;
+  margin-top: var(--space-l);
+}
+
+.waitlist-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.waitlist-row {
+  display: grid;
+  gap: var(--space-s);
+}
+
+.waitlist-form input {
+  width: 100%;
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ash);
+  border-radius: var(--radius);
+  background: var(--soot);
+  color: var(--bone);
+  font: inherit;
+}
+
+.waitlist-form input::placeholder {
+  color: var(--ash);
+}
+
+.waitlist-form input[aria-invalid="true"] {
+  border: 2px solid var(--rust);
+}
+
+/* aria-disabled (not disabled) so a focused button keeps focus while sending */
+.waitlist-form button[aria-disabled="true"] {
+  cursor: progress;
+  opacity: 0.75;
+}
+
+/* Status line: the words carry the meaning; colour only reinforces it */
+.form-msg {
+  min-height: 1.6em; /* reserve the line so messages don't shift the layout */
+  margin-top: var(--space-s);
+}
+
+.form-msg[data-state="error"] {
+  color: var(--rust);
+}
+
+.form-msg[data-state="success"] {
+  color: var(--moss);
+}
+
+@media (min-width: 48rem) {
+  .waitlist-row {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+/* ---------- 10. Footer ---------- */
+.site-footer {
+  padding-block: var(--space-l);
+  border-top: 1px solid var(--hearth);
+  color: var(--ash);
+  font-size: var(--step--1);
+}
+
+.footer-inner {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.footer-brand p {
+  margin-top: 0.5rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+}
+
+.footer-links a {
+  display: inline-block;
+  padding-block: 0.5rem; /* comfortable tap height */
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--wick);
+}
+
+.social {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: -0.6rem; /* optically align icons with the text edge */
+}
+
+.social a {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius);
+  color: var(--bone);
+}
+
+.social a:hover {
+  color: var(--wick);
+}
+
+.social svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.footer-note {
+  padding-top: var(--space-m);
+  border-top: 1px solid var(--hearth);
+}
+
+@media (min-width: 48rem) {
+  .footer-inner {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    column-gap: var(--space-l);
+  }
+
+  .footer-note {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-l);
+  }
+
+  /* The phone gets a real column so the streak grid reads as the page's centrepiece */
+  .hero-inner {
+    grid-template-columns: 1fr minmax(20rem, 24rem);
+    align-items: center;
+  }
+
+  .phone {
+    width: 100%;
+    margin-inline: auto 0;
+  }
+}
+
+/* ---------- Reduced motion: no transitions anywhere ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

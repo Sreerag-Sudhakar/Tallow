@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tallow: the habit tracker that survives a missed day</title>
+  <meta name="description" content="Tallow is a habit tracker for busy people. Miss a day and your streak dims instead of resetting, so one bad Tuesday doesn't undo a month. Join the waitlist.">
+  <meta name="theme-color" content="#2B2621">
+
+  <!-- Open Graph / social preview. og:image must be absolute for link previews. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Tallow: the habit tracker that survives a missed day">
+  <meta property="og:description" content="Miss a day. Keep the habit. Streaks that dim instead of resetting. Join the waitlist.">
+  <meta property="og:image" content="https://sreerag-sudhakar.github.io/Tallow/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts load without blocking first paint (system fallbacks show until they arrive).
+       Newsreader is pinned to its display cut (opsz 72, weight 400): ~22 KB instead of ~132 KB. -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@72,400&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&family=Newsreader:opsz,wght@72,400&display=swap"></noscript>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Flag JS support before first paint so no-JS visitors get the fallback layout.
+       If main.js never runs (blocked, 404), drop the flag once the page has loaded so nothing is left dead. -->
+  <script>
+    document.documentElement.classList.add('js');
+    addEventListener('load', () => {
+      if (!document.documentElement.classList.contains('js-ready')) document.documentElement.classList.remove('js');
+    });
+  </script>
+  <script src="js/main.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- 1. Navbar -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top">
+        <svg class="logo-mark" viewBox="0 0 22 22" width="22" height="22" aria-hidden="true">
+          <rect x="0" y="0" width="10" height="10" rx="2"/>
+          <rect x="12" y="0" width="10" height="10" rx="2"/>
+          <rect x="0" y="12" width="10" height="10" rx="2"/>
+          <rect class="logo-mark-open" x="12.75" y="12.75" width="8.5" height="8.5" rx="1.5"/>
+        </svg>
+        <span>Tallow</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">
+          <span class="visually-hidden">Menu</span>
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+            <path class="nav-toggle-top" d="M4 9h16"/>
+            <path class="nav-toggle-bottom" d="M4 15h16"/>
+          </svg>
+        </button>
+        <ul id="nav-menu" class="nav-menu">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <a class="button button--small" href="#waitlist">Join the waitlist</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 2. Hero (Task 2) -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1 id="hero-title">Miss a day. Keep the habit.</h1>
+          <p class="hero-sub">Tallow tracks one habit at a time. When life gets in the way, your streak dims instead of resetting to zero.</p>
+          <div class="hero-actions">
+            <a class="button" href="#waitlist">Join the waitlist</a>
+            <a class="button button--ghost" href="#how">See how it works</a>
+          </div>
+          <p class="hero-note">Coming to iOS and Android in spring 2027. One email when it's ready, nothing else.</p>
+        </div>
+
+        <!-- Phone mockup: the streak grid is the only part exposed to assistive tech -->
+        <div class="phone">
+          <div class="phone-head" aria-hidden="true">
+            <p class="phone-habit">Evening walk</p>
+            <p class="phone-meta">Day 28 · logged 9:41 pm</p>
+          </div>
+          <div class="streak-wrap">
+            <div class="weekdays" aria-hidden="true">
+              <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+            </div>
+            <!-- Day 19 is the missed day: dashed outline + slash, so it reads without colour.
+                 Days 20-22 are dimmed and brighten back to full: the streak dims instead of resetting. -->
+            <div class="streak" role="img" aria-label="Streak calendar: 27 of the last 28 days done. Day 19 missed; the streak dimmed for three days, then came back to full.">
+              <span class="day day--done" style="--i:1"></span>
+              <span class="day day--done" style="--i:2"></span>
+              <span class="day day--done" style="--i:3"></span>
+              <span class="day day--done" style="--i:4"></span>
+              <span class="day day--done" style="--i:5"></span>
+              <span class="day day--done" style="--i:6"></span>
+              <span class="day day--done" style="--i:7"></span>
+              <span class="day day--done" style="--i:8"></span>
+              <span class="day day--done" style="--i:9"></span>
+              <span class="day day--done" style="--i:10"></span>
+              <span class="day day--done" style="--i:11"></span>
+              <span class="day day--done" style="--i:12"></span>
+              <span class="day day--done" style="--i:13"></span>
+              <span class="day day--done" style="--i:14"></span>
+              <span class="day day--done" style="--i:15"></span>
+              <span class="day day--done" style="--i:16"></span>
+              <span class="day day--done" style="--i:17"></span>
+              <span class="day day--done" style="--i:18"></span>
+              <span class="day day--missed" style="--i:19"></span>
+              <span class="day day--done day--dim-1" style="--i:20"></span>
+              <span class="day day--done day--dim-2" style="--i:21"></span>
+              <span class="day day--done day--dim-3" style="--i:22"></span>
+              <span class="day day--done" style="--i:23"></span>
+              <span class="day day--done" style="--i:24"></span>
+              <span class="day day--done" style="--i:25"></span>
+              <span class="day day--done" style="--i:26"></span>
+              <span class="day day--done" style="--i:27"></span>
+              <span class="day day--done day--today" style="--i:28"></span>
+            </div>
+            <p class="streak-count" aria-hidden="true"><strong>27 of 28 days.</strong> Dimmed, never reset.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Social proof strip (fictional numbers) -->
+    <section class="proof" aria-label="Tallow by the numbers">
+      <div class="container proof-inner">
+        <p class="proof-item"><strong class="proof-num">12,400</strong> people on the waitlist</p>
+        <p class="proof-item">
+          <span aria-hidden="true">
+            <svg class="stars" viewBox="0 0 120 24" width="90" height="18">
+              <defs>
+                <path id="star" d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7L12 17.3 5.8 20.9l1.6-7L2 9.2l7.1-.6z"/>
+                <linearGradient id="star-part"><stop offset="0.8" stop-color="#E8A33D"/><stop offset="0.8" stop-color="#ABA597"/></linearGradient>
+              </defs>
+              <use href="#star"/><use href="#star" x="24"/><use href="#star" x="48"/><use href="#star" x="72"/>
+              <use href="#star" x="96" fill="url(#star-part)"/>
+            </svg>
+          </span>
+          <strong class="proof-num">4.8</strong> out&nbsp;of&nbsp;5 from 900 beta testers
+        </p>
+      </div>
+    </section>
+
+    <!-- 4. Features (Task 4) -->
+    <section id="features" aria-labelledby="features-title">
+      <div class="container">
+        <h2 id="features-title">Built for the weeks that go sideways</h2>
+        <p class="section-lead">Most habit apps are designed for your best week. Tallow is designed for the week a deadline lands on a Tuesday and the gym doesn't happen.</p>
+
+        <ul class="feature-list">
+          <li class="feature feature--lead">
+            <svg class="feature-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <rect x="1.5" y="8.5" width="6" height="7" rx="1.2"/>
+              <rect x="9" y="8.5" width="6" height="7" rx="1.2" stroke-dasharray="1.6 1.6"/>
+              <rect x="16.5" y="8.5" width="6" height="7" rx="1.2"/>
+            </svg>
+            <h3>A missed day dims your streak. It doesn’t erase it.</h3>
+            <p>Other trackers drop you to zero the first time you slip. Tallow keeps the count and marks the gap, so one late night at work doesn't undo three good weeks. Miss two in a row and it asks, gently, whether the habit still fits your life.</p>
+          </li>
+          <li class="feature">
+            <svg class="feature-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <circle cx="12" cy="12" r="8.5"/>
+              <path d="M8.5 12.5l2.5 2.5 4.5-5"/>
+            </svg>
+            <h3>Check in faster than you can unlock your phone</h3>
+            <p>One tap on the home-screen widget. Most check-ins take under ten seconds, so logging never becomes its own chore.</p>
+          </li>
+          <li class="feature">
+            <svg class="feature-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/>
+              <path d="M10 21h4"/>
+            </svg>
+            <h3>One reminder, at the hour you choose</h3>
+            <p>No badges, no confetti, no 6 a.m. guilt trip. Just a quiet note when you're usually free.</p>
+          </li>
+          <li class="feature">
+            <svg class="feature-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <path d="M5 20v-6M9.7 20V8M14.3 20v-5M19 20V10"/>
+            </svg>
+            <h3>A Sunday look-back</h3>
+            <p>A short summary shows what held and what slipped, so you can adjust before a bad week turns into a bad month.</p>
+          </li>
+          <li class="feature">
+            <svg class="feature-icon" viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
+              <rect x="5" y="11" width="14" height="9" rx="2"/>
+              <path d="M8 11V8a4 4 0 0 1 8 0v3"/>
+            </svg>
+            <h3>Your habits stay yours</h3>
+            <p>No public profiles, no leaderboards. Sync is end-to-end encrypted, and nothing gets shared unless you share it.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 5. How it works (Task 5) -->
+    <section id="how" aria-labelledby="how-title">
+      <div class="container">
+        <h2 id="how-title">One habit, three steps</h2>
+
+        <!-- role="list" keeps list semantics in Safari when list-style is removed -->
+        <ol class="steps" role="list">
+          <li>
+            <h3>Pick one habit</h3>
+            <p>Not five. One. Tallow asks what you want to do, and what the smallest version of it looks like on a bad day.</p>
+          </li>
+          <li>
+            <h3>Check in each evening</h3>
+            <p>Tap once when it’s done. If the evening gets away from you, you have until noon the next day to log it.</p>
+          </li>
+          <li>
+            <h3>Let a missed day pass</h3>
+            <p>The day shows as a gap, the streak carries on, and you won’t get a single guilt-trip notification about it.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. Testimonials (fictional beta testers) -->
+    <section id="stories" aria-labelledby="stories-title">
+      <div class="container">
+        <h2 id="stories-title">People who stopped starting over</h2>
+
+        <div class="quotes">
+          <figure class="quote quote--lead">
+            <blockquote>
+              <p>I’d restarted a reading habit four times this year. The first time I missed a day in Tallow and still saw 23 of 24, I just kept going. That turned out to be the whole trick.</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">PR</span>
+              <span><span class="quote-name">Priya Raman</span> <span class="quote-role">Product designer, beta tester since March</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote">
+            <blockquote>
+              <p>My hours are unpredictable. Every other app punished me for a trial week. Tallow showed a gap and asked if ten minutes still worked. It did.</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">MO</span>
+              <span><span class="quote-name">Marcus Ojo</span> <span class="quote-role">Junior associate at a law firm</span></span>
+            </figcaption>
+          </figure>
+
+          <figure class="quote">
+            <blockquote>
+              <p>The noon cutoff is the feature nobody talks about. My “evening” is 7 a.m. I finally have a tracker that doesn’t think I’m failing.</p>
+            </blockquote>
+            <figcaption>
+              <span class="avatar" aria-hidden="true">ES</span>
+              <span><span class="quote-name">Elena Sørensen</span> <span class="quote-role">Night-shift nurse</span></span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Pricing (Task 7) -->
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="container">
+        <h2 id="pricing-title">Free to start. Fair when you grow.</h2>
+        <p class="section-lead">One habit is free, for good. Pay only when you want more room.</p>
+
+        <!-- Billing toggle: hidden without JS, where monthly prices show -->
+        <div class="billing" role="group" aria-label="Billing period">
+          <button type="button" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-billing="yearly" aria-pressed="false">Yearly <span class="billing-save">save 20%</span></button>
+        </div>
+        <p id="billing-status" class="visually-hidden" aria-live="polite"></p>
+
+        <!-- Prices that change carry data-monthly / data-yearly; main.js swaps the text -->
+        <div class="plans">
+          <article class="plan" aria-labelledby="plan-free">
+            <h3 id="plan-free">Free</h3>
+            <p class="plan-for">For building your first habit.</p>
+            <p class="price"><span class="price-amount">$0</span> <span class="price-period">forever</span></p>
+            <ul class="plan-features">
+              <li>One habit</li>
+              <li>Forgiving streaks</li>
+              <li>One reminder, at the hour you choose</li>
+              <li>Last 30 days of history</li>
+            </ul>
+            <a class="button button--ghost" href="#waitlist">Join the waitlist</a>
+          </article>
+
+          <article class="plan plan--pro" aria-labelledby="plan-pro">
+            <h3 id="plan-pro">Pro</h3>
+            <p class="plan-tag">Where most beta testers landed</p>
+            <p class="plan-for">For when the first habit has stuck.</p>
+            <p class="price">
+              <span class="price-amount" data-monthly="$5" data-yearly="$48">$5</span>
+              <span class="price-period"><span aria-hidden="true" data-monthly="/mo" data-yearly="/yr">/mo</span><span class="visually-hidden" data-monthly="per month" data-yearly="per year">per month</span></span>
+            </p>
+            <ul class="plan-features">
+              <li>Up to 3 habits, added one at a time</li>
+              <li>Full history, beyond 30 days</li>
+              <li>Set your own check-in cutoff (default is noon)</li>
+            </ul>
+            <a class="button" href="#waitlist">Join the waitlist</a>
+          </article>
+
+          <article class="plan" aria-labelledby="plan-team">
+            <h3 id="plan-team">Team</h3>
+            <p class="plan-for">For small teams, from 3 seats.</p>
+            <p class="price">
+              <span class="price-amount" data-monthly="$4" data-yearly="$38">$4</span>
+              <span class="price-period"><span aria-hidden="true" data-monthly="/seat/mo" data-yearly="/seat/yr">/seat/mo</span><span class="visually-hidden" data-monthly="per seat per month" data-yearly="per seat per year">per seat per month</span></span>
+            </p>
+            <ul class="plan-features">
+              <li>Everything in Pro, for each person</li>
+              <li>Shared team habits, like a midday walk</li>
+              <li>Streaks stay private unless someone shares</li>
+              <li>One invoice for everyone</li>
+            </ul>
+            <a class="button button--ghost" href="#waitlist">Join the waitlist</a>
+          </article>
+        </div>
+        <p class="plans-note">Everyone joins the same waitlist. Pick your plan at launch.</p>
+      </div>
+    </section>
+
+    <!-- 8. FAQ (Task 8) -->
+    <section id="faq" aria-labelledby="faq-title">
+      <div class="container faq-inner">
+        <h2 id="faq-title">Questions, answered plainly</h2>
+
+        <!-- Accordion: without JS these are plain headings with visible answers.
+             main.js turns each h3[data-controls] into an aria-expanded button and collapses the answer. -->
+        <div class="faq-list">
+          <div class="faq-item">
+            <h3 data-controls="faq-1">What actually happens when I miss a day?</h3>
+            <div id="faq-1" class="faq-a">
+              <p>The day shows as a gap and your streak count carries on. Miss two in a row and Tallow asks whether the habit still fits: you can shrink it, pause it, or keep going. It never resets you to zero.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 data-controls="faq-2">When does Tallow launch, and on what?</h3>
+            <div id="faq-2" class="faq-a">
+              <p>iOS and Android, in spring 2027. People on the waitlist get access about two weeks early, and we’ll email you once when it’s ready.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 data-controls="faq-3">Is my habit data private?</h3>
+            <div id="faq-3" class="faq-a">
+              <p>Yes. Sync is end-to-end encrypted, there are no public profiles, and we don’t sell or share data with advertisers. You can export or delete everything from settings.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 data-controls="faq-4">Why only one habit at a time?</h3>
+            <div id="faq-4" class="faq-a">
+              <p>Starting five habits at once is the quickest way to drop all five. Pro lets you track up to three, but each new one unlocks only after the last has held for three weeks.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 data-controls="faq-5">How does Team billing work?</h3>
+            <div id="faq-5" class="faq-a">
+              <p>Team starts at 3 seats and is billed per seat, monthly or yearly, on one invoice. Everyone gets everything in Pro, and streaks stay private unless someone chooses to share.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <h3 data-controls="faq-6">Can I cancel Pro whenever I like?</h3>
+            <div id="faq-6" class="faq-a">
+              <p>Yes. Cancel from settings and Pro stays on until the end of the period you paid for. Your history stays too; you just drop back to one active habit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Final CTA (Task 9) -->
+    <section id="waitlist" class="waitlist" aria-labelledby="waitlist-title">
+      <div class="container">
+        <h2 id="waitlist-title">Save your spot before launch</h2>
+        <p class="section-lead">Join 12,400 people getting Tallow two weeks before launch. One email when it’s ready, and that’s it.</p>
+
+        <!-- FORMSPREE PLACEHOLDER: replace YOUR_FORM_ID in the action below with your own form ID.
+             main.js posts to this same URL, so this is the only place to change. -->
+        <form class="waitlist-form" action="https://formspree.io/f/YOUR_FORM_ID" method="post">
+          <label for="waitlist-email">Email address</label>
+          <div class="waitlist-row">
+            <input id="waitlist-email" name="email" type="email" autocomplete="email" placeholder="you@work.com" required aria-describedby="waitlist-msg">
+            <button class="button" type="submit">Join the waitlist</button>
+          </div>
+          <p id="waitlist-msg" class="form-msg" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 10. Footer -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a class="logo" href="#top">
+          <svg class="logo-mark" viewBox="0 0 22 22" width="22" height="22" aria-hidden="true">
+            <rect x="0" y="0" width="10" height="10" rx="2"/>
+            <rect x="12" y="0" width="10" height="10" rx="2"/>
+            <rect x="0" y="12" width="10" height="10" rx="2"/>
+            <rect class="logo-mark-open" x="12.75" y="12.75" width="8.5" height="8.5" rx="1.5"/>
+          </svg>
+          <span>Tallow</span>
+        </a>
+        <p>Habits for people whose weeks don’t go to plan.</p>
+      </div>
+
+      <nav aria-label="Footer">
+        <ul class="footer-links">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#waitlist">Join the waitlist</a></li>
+        </ul>
+      </nav>
+
+      <!-- Social links are placeholders: swap href="#" for real profile URLs -->
+      <ul class="social">
+        <li>
+          <a href="#" aria-label="Tallow on Instagram">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M17 7h.01"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="Tallow on LinkedIn">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="3.5" y="3.5" width="17" height="17" rx="3"/>
+              <path d="M8 10.5V16M8 7.5v.01M12 16v-5.5M12 13a2.5 2.5 0 0 1 5 0v3"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="Tallow on YouTube">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <rect x="2.5" y="5.5" width="19" height="13" rx="4"/>
+              <path d="M10.5 9.5v5l4-2.5z"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+      <p class="footer-note">Tallow is a fictional product created as a design and development sample.</p>
+    </div>
+  </footer>
+</body>
+</html>
