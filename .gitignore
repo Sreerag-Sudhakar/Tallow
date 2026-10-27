@@ -1,1 +1,39 @@
+# Agent scratch workspace
 .superpowers/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+*.lnk
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (only used for tooling such as `npx lighthouse`; the site has no dependencies)
+node_modules/
+npm-debug.log*
+package-lock.json
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Local environment and secrets
+.env
+.env.*
+
+# Deploy tool folders
+.vercel/
+.netlify/
+
+# Local test and audit output
+lighthouse-reports/
+*.report.html
+*.report.json
